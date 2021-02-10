@@ -9,7 +9,7 @@ import com.netflix.nfsidecar.instance.VpcInstanceDataRetriever;
  */
 public class AwsInstanceEnvIdentity implements InstanceEnvIdentity {
 
-    private Boolean isClassic = false, isDefaultVpc = false, isNonDefaultVpc = false;
+    private Boolean isClassic = false, isLocal = false, isEcs = false, isDefaultVpc = false, isNonDefaultVpc = false;
 
     public AwsInstanceEnvIdentity() {
         String vpcId = getVpcId();
@@ -33,6 +33,16 @@ public class AwsInstanceEnvIdentity implements InstanceEnvIdentity {
     @Override
     public Boolean isClassic() {
         return this.isClassic;
+    }
+
+    @Override
+    public Boolean isEcs() {
+        return this.isEcs;
+    }
+
+    @Override
+    public Boolean isLocal() {
+        return this.isLocal;
     }
 
     @Override

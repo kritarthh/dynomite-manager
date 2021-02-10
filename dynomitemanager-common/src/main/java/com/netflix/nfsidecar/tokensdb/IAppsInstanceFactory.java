@@ -41,7 +41,7 @@ public interface IAppsInstanceFactory
      * @param region the the region of the node
      * @return a list of nodes in {@code appName} and same Racks
      */
-	public List<AppsInstance> getLocalDCIds(String appName, String region);    
+    public List<AppsInstance> getLocalDCIds(String appName, String region);
     
     /**
      * Return the Dynomite server node with the given {@code id}.

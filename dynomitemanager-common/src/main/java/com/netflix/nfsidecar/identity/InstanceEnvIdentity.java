@@ -8,6 +8,8 @@ public interface InstanceEnvIdentity {
 	 * @return true if running instance is in "classic", false otherwise.
 	 */
 	public Boolean isClassic();
+	public Boolean isEcs();
+	public Boolean isLocal();
 	/*
 	 * @return true if running instance is in VPC, under your default AWS account, false otherwise.
 	 */
@@ -18,6 +20,6 @@ public interface InstanceEnvIdentity {
 	public Boolean isNonDefaultVpc();
 	
 	public static enum InstanceEnvironent {
-		CLASSIC, DEFAULT_VPC, NONDEFAULT_VPC
+		LOCAL, CLASSIC, ECS, DEFAULT_VPC, NONDEFAULT_VPC
 	};
 }

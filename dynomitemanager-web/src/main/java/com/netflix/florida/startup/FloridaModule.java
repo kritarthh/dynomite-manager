@@ -38,7 +38,9 @@ import org.quartz.SchedulerFactory;
 import org.quartz.impl.StdSchedulerFactory;
 
 import com.netflix.nfsidecar.aws.AWSMembership;
+import com.netflix.nfsidecar.local.LocalMembership;
 import com.netflix.nfsidecar.aws.AwsInstanceEnvIdentity;
+import com.netflix.nfsidecar.local.LocalInstanceEnvIdentity;
 import com.netflix.nfsidecar.aws.IAMCredential;
 import com.netflix.nfsidecar.aws.ICredential;
 import com.netflix.nfsidecar.backup.Backup;
@@ -100,10 +102,12 @@ public final class FloridaModule extends AbstractModule {
 
         /* AWS binding */
         //bind(InstanceDataRetriever.class).to(VpcInstanceDataRetriever.class);
-        bind(IMembership.class).to(AWSMembership.class);
+        // bind(IMembership.class).to(AWSMembership.class);
+        bind(IMembership.class).to(LocalMembership.class);
         bind(ICredential.class).to(IAMCredential.class);
-        bind(ICredential.class).annotatedWith(Names.named("awsroleassumption")).to(AwsRoleAssumptionCredential.class);
-        bind(InstanceEnvIdentity.class).to(AwsInstanceEnvIdentity.class);
+        // bind(ICredential.class).annotatedWith(Names.named("awsroleassumption")).to(AwsRoleAssumptionCredential.class);
+        // bind(InstanceEnvIdentity.class).to(AwsInstanceEnvIdentity.class);
+        bind(InstanceEnvIdentity.class).to(LocalInstanceEnvIdentity.class);
         bind(Backup.class).to(S3Backup.class);
         bind(Restore.class).to(S3Restore.class);
         

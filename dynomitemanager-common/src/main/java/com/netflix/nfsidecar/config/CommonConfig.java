@@ -31,7 +31,7 @@ public interface CommonConfig {
     @PropertyName(name = "region")
     public String getRegion();
     
-    @DefaultValue("")
+    @DefaultValue("localrack")
     @PropertyName(name = "rack")
     public String getRack();
     

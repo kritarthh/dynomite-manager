@@ -47,7 +47,7 @@ public class S3Backup implements Backup {
                                                          // equal to 500MB. We
                                                          // do not want this too
                                                          // large
-    // and run out of heap space
+                                                         // and run out of heap space
 
     @Inject
     private AWSCommonConfig awsCommonConfig;
@@ -70,7 +70,7 @@ public class S3Backup implements Backup {
          * Key name is comprised of the backupDir + DC + Rack + token + Date
          */
         String keyName = awsCommonConfig.getBackupLocation() + "/" + iid.getInstance().getDatacenter() + "/"
-                + iid.getInstance().getRack() + "/" + iid.getInstance().getToken() + "/" + todayStart.getMillis();
+            + iid.getInstance().getRack() + "/" + iid.getInstance().getToken() + "/" + todayStart.getMillis();
 
         // Get bucket location.
         logger.info("Key in Bucket: " + keyName);
@@ -93,7 +93,7 @@ public class S3Backup implements Backup {
                 List<PartETag> partETags = new ArrayList<PartETag>();
 
                 InitiateMultipartUploadRequest initRequest = new InitiateMultipartUploadRequest(awsCommonConfig.getBucketName(),
-                        keyName);
+                                                                                                keyName);
 
                 InitiateMultipartUploadResult initResponse = s3Client.initiateMultipartUpload(initRequest);
 
@@ -109,8 +109,8 @@ public class S3Backup implements Backup {
 
                         // Create request to upload a part.
                         UploadPartRequest uploadRequest = new UploadPartRequest().withBucketName(awsCommonConfig.getBucketName())
-                                .withKey(keyName).withUploadId(initResponse.getUploadId()).withPartNumber(i)
-                                .withFileOffset(filePosition).withFile(file).withPartSize(partSize);
+                            .withKey(keyName).withUploadId(initResponse.getUploadId()).withPartNumber(i)
+                            .withFileOffset(filePosition).withFile(file).withPartSize(partSize);
 
                         // Upload part and add response to our list.
                         partETags.add(s3Client.uploadPart(uploadRequest).getPartETag());
@@ -119,14 +119,14 @@ public class S3Backup implements Backup {
                     }
 
                     CompleteMultipartUploadRequest compRequest = new CompleteMultipartUploadRequest(
-                            awsCommonConfig.getBucketName(), keyName, initResponse.getUploadId(), partETags);
+                                                                                                    awsCommonConfig.getBucketName(), keyName, initResponse.getUploadId(), partETags);
 
                     s3Client.completeMultipartUpload(compRequest);
 
                 } catch (Exception e) {
                     logger.error("Abosting multipart upload due to error");
                     s3Client.abortMultipartUpload(new AbortMultipartUploadRequest(awsCommonConfig.getBucketName(), keyName,
-                            initResponse.getUploadId()));
+                                                                                  initResponse.getUploadId()));
                 }
 
                 return true;
@@ -143,7 +143,7 @@ public class S3Backup implements Backup {
 
         } catch (AmazonClientException ace) {
             logger.error("AmazonClientException;" + " the client encountered " + "an internal error while trying to "
-                    + "communicate with S3, ");
+                         + "communicate with S3, ");
             logger.error("Error Message: " + ace.getMessage());
             return false;
         }

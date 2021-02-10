@@ -27,8 +27,8 @@ public class IAMCredential implements ICredential
         this.iamCredProvider = new InstanceProfileCredentialsProvider();
     }
 
-	public AWSCredentialsProvider getAwsCredentialProvider() 
-	{
-		return iamCredProvider;
-	}
+    public AWSCredentialsProvider getAwsCredentialProvider()
+    {
+        return iamCredProvider;
+    }
 }

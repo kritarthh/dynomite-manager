@@ -39,7 +39,7 @@ public interface CassCommonConfig {
     /**
      * @return the port that the bootstrap cluster can be contacted
      */
-    @DefaultValue("7102")
+    @DefaultValue("9160")
     @PropertyName(name = "dyno.sidecore.port")
     public int getCassandraThriftPort();
 

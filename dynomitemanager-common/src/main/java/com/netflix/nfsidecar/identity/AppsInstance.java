@@ -130,7 +130,7 @@ public class AppsInstance implements Serializable
     public String toString()
     {
         return String.format("Hostname: %s, InstanceId: %s, APP_NAME: %s, RAC : %s Location %s, Id: %s: Token: %s", getHostName(), getInstanceId(), getApp(), getZone(), getDatacenter(), getId(),
-                getToken());
+                             getToken());
     }
 
     public String getDatacenter()
@@ -165,7 +165,7 @@ public class AppsInstance implements Serializable
 
     public String getRack() 
     {
-    	return rack;
+        return rack;
     }
     
     public void setRack(String rack)

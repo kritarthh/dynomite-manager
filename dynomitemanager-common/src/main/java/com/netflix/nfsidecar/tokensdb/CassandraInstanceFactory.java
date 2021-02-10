@@ -31,9 +31,9 @@ public class CassandraInstanceFactory implements IAppsInstanceFactory
 
     @Inject
     public CassandraInstanceFactory(CommonConfig config, InstanceDataDAOCassandra dao, IEnvVariables envVariables) {
-    	this.config = config;
-    	this.dao = dao;
-    	this.envVariables = envVariables;
+        this.config = config;
+        this.dao = dao;
+        this.envVariables = envVariables;
     }
     
     public List<AppsInstance> getAllIds(String appName)
@@ -61,16 +61,16 @@ public class CassandraInstanceFactory implements IAppsInstanceFactory
     public void sort(List<AppsInstance> return_)
     {
         Comparator<? super AppsInstance> comparator = new Comparator<AppsInstance>()
-        {
+                                                      {
 
-            @Override
-            public int compare(AppsInstance o1, AppsInstance o2)
-            {
-                Integer c1 = o1.getId();
-                Integer c2 = o2.getId();
-                return c1.compareTo(c2);
-            }
-        };
+                                                          @Override
+                                                          public int compare(AppsInstance o1, AppsInstance o2)
+                                                          {
+                                                              Integer c1 = o1.getId();
+                                                              Integer c2 = o2.getId();
+                                                              return c1.compareTo(c2);
+                                                          }
+            };
         Collections.sort(return_, comparator);
     }
 
@@ -97,9 +97,9 @@ public class CassandraInstanceFactory implements IAppsInstanceFactory
             // remove old data node which are dead.
             //if (app.endsWith("-dead")) {
             //       AppsInstance oldData = dao.getInstance(app, ins.getRack(), id);
-                   // clean up a very old data...
-                   //if (null != oldData)
-                   //     dao.deleteInstanceEntry(oldData);
+            // clean up a very old data...
+            //if (null != oldData)
+            //     dao.deleteInstanceEntry(oldData);
             //}
             dao.createInstanceEntry(ins);
             return ins;
