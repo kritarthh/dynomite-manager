@@ -50,7 +50,7 @@ public class RedisStorageProxy extends Task implements StorageProxy, HealthIndic
     private static final String PROC_MEMINFO_PATH = "/proc/meminfo";
     private static final Pattern MEMINFO_PATTERN = Pattern.compile("MemTotal:\\s*([0-9]*)");
 
-    private final String REDIS_START_SCRIPT = "/apps/nfredis/bin/launch_nfredis.sh";
+    private final String REDIS_START_SCRIPT = "/apps/nfredis/bin/launch_redis.sh";
     private final String REDIS_STOP_SCRIPT = "/apps/nfredis/bin/kill_redis.sh";
 
     private static final String REDIS_CONF_MAXMEMORY_PATTERN = "^maxmemory\\s*[0-9][0-9]*[a-zA-Z]*";

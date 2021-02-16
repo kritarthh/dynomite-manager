@@ -1,42 +1,42 @@
 package com.netflix.nfsidecar.instance;
 
+import com.netflix.nfsidecar.resources.env.IEnvVariables;
+
 /**
  * Looks at local (system) properties for metadata about the running 'instance'.
  * Typically, this is used for locally-deployed testing.
  *
  * @author jason brown
  */
-public class LocalInstanceDataRetriever implements InstanceDataRetriever
+public class DockerInstanceDataRetriever implements InstanceDataRetriever
 {
-    private static final String PREFIX = "romeo.localInstance.";
-
     public String getRac()
     {
-        return System.getProperty(PREFIX + "availabilityZone", "localzone");
+        return System.getenv("AZ");
     }
 
     public String getPublicHostname()
     {
-        return System.getProperty(PREFIX + "publicHostname", "localhost");
+        return System.getenv("EXTERNAL_SERVER_IP");
     }
 
     public String getPublicIP()
     {
-        return System.getProperty(PREFIX + "publicIp", "127.0.0.1");
+        return System.getenv("EXTERNAL_SERVER_IP");
     }
 
     public String getInstanceId()
     {
-        return System.getProperty(PREFIX + "instanceId", "127.0.0.1");
+        return System.getenv("INTERNAL_SERVER_IP");
     }
 
     public String getInstanceType()
     {
-        return System.getProperty(PREFIX + "instanceType", "local");
+        return "docker-task";
     }
-    
+
     public String getMac() {
-        return System.getProperty(PREFIX + "instanceMac", "10:10:10:10:10");
+        return "11:11:11:11:11";
     }
 
     @Override

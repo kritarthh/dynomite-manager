@@ -27,7 +27,7 @@ public interface CommonConfig {
     /**
      * @return Get the Region name
      */
-    @DefaultValue("")
+    @DefaultValue("localregion")
     @PropertyName(name = "region")
     public String getRegion();
     
@@ -37,7 +37,10 @@ public interface CommonConfig {
     
     @PropertyName(name = "zones.available")
     public List<String> getRacks();
-    
+
+    @DefaultValue("dynomite_demo")
+    @PropertyName(name = "dyno.clustername")
+    public String getDynomiteClusterName();
 
     /**
      * Get the security group associated with nodes in this cluster

@@ -126,26 +126,6 @@ public class FloridaServer {
         state.setBootstrapStatus(Bootstrap.NOT_STARTED);
         state.setStorageAlive(storageProxy.isAlive());
 
-        if (floridaConfig.isDynomiteMultiDC()) {
-            scheduler.runTaskNow(UpdateSecuritySettings.class);
-            /*
-             * sleep for some random between 100 - 200 sec if this is a new node
-             * with new IP for SG to be updated by other seed nodes
-             */
-            if (id.isReplace() || id.isTokenPregenerated()) {
-                long initTime = 100 + (int) (Math.random() * ((200 - 100) + 1));
-
-                logger.info("Sleeping " + initTime + " seconds -> a node is replaced or token is pregenerated.");
-                sleeper.sleep(initTime * 1000);
-            } else if (UpdateSecuritySettings.firstTimeUpdated) {
-                logger.info("Sleeping 60 seconds -> first time security settings are updated");
-                sleeper.sleep(60 * 1000);
-            }
-
-            scheduler.addTask(UpdateSecuritySettings.JOBNAME, UpdateSecuritySettings.class,
-                    UpdateSecuritySettings.getTimer(id));
-        }
-
         // Invoking the task directly as any errors in this task
         // should not let Florida continue. However, we don't want to kill
         // the Florida process, but, want it to be stuck.

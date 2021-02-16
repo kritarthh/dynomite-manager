@@ -227,7 +227,7 @@ public class DynomiteProcessManager extends Task implements IDynomiteProcess, He
     public boolean dynomiteProcessCheck() {
         Process process = null;
         try {
-            String cmd = String.format("ps -ef | grep  '[/]apps/%1$s/bin/%1$s'", config.getDynomiteProcessName());
+            String cmd = String.format("ps -ef | grep  '[b]in/%1$s'", config.getDynomiteProcessName());
             String[] cmdArray = { "/bin/sh", "-c", cmd };
             logger.debug("Running checkProxyProcess command: " + cmd);
 

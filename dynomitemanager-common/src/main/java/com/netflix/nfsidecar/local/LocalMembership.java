@@ -30,6 +30,7 @@ import com.netflix.nfsidecar.identity.IMembership;
 import com.netflix.nfsidecar.identity.InstanceEnvIdentity;
 import com.netflix.nfsidecar.instance.InstanceDataRetriever;
 import com.netflix.nfsidecar.resources.env.IEnvVariables;
+import com.netflix.nfsidecar.utils.SystemUtils;
 
 public class LocalMembership implements IMembership {
     private static final Logger logger = LoggerFactory.getLogger(LocalMembership.class);
@@ -50,9 +51,20 @@ public class LocalMembership implements IMembership {
         try {
             String rack = envVariables.getRack();
             List<String> instanceIds = Lists.newArrayList();
-            instanceIds.add("127.0.0.1");
+            String subnet = retriever.getPublicIP().substring(0, retriever.getPublicIP().length() - 1);
+            for (int i = 0; i <= 9; ++i) {
+                String ip = String.format("%s%d", subnet, i);
+                try {
+                    if (!SystemUtils.getDataFromUrl(String.format("http://%s:8000/", ip)).trim().isEmpty()) {
+                        instanceIds.add(ip);
+                    }
+                }
+                catch (Exception e) {
+                    logger.warn("failed to fetch data for %s", ip);
+                }
+            }
             logger.info(String.format("Querying local returned following instance in the Rack: %s --> %s",
-                    envVariables.getRack(), StringUtils.join(instanceIds, ",")));
+                    rack, StringUtils.join(instanceIds, ",")));
             return instanceIds;
         } finally {
         }
@@ -68,12 +80,28 @@ public class LocalMembership implements IMembership {
      */
     @Override
     public int getRacMembershipSize() {
-        return 1;
+        String rack = envVariables.getRack();
+        List<String> instanceIds = Lists.newArrayList();
+        String subnet = retriever.getPublicIP().substring(0, retriever.getPublicIP().length() - 1);
+        for (int i = 0; i <= 9; ++i) {
+            String ip = String.format("%s%d", subnet, i);
+            try {
+                if (!SystemUtils.getDataFromUrl(String.format("http://%s:8000/", ip)).trim().isEmpty()) {
+                    instanceIds.add(ip);
+                }
+            }
+            catch (Exception e) {
+                logger.warn("failed to fetch data for %s", ip);
+            }
+        }
+        logger.info(String.format("Querying local returned %d instances in the Rack: %s",
+                                  instanceIds.size(), rack));
+        return instanceIds.size();
     }
 
     @Override
     public int getCrossAccountRacMembershipSize() {
-        return 1;
+        return getRacMembershipSize();
     }
 
     /**

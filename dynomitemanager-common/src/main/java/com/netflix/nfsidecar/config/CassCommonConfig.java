@@ -43,7 +43,7 @@ public interface CassCommonConfig {
     @PropertyName(name = "dyno.sidecore.port")
     public int getCassandraThriftPort();
 
-    @DefaultValue("127.0.0.1")
+    @DefaultValue("10.0.100.254")
     @PropertyName(name = "dyno.sidecore.seeds")
     public String getCassandraSeeds();
 

@@ -148,7 +148,7 @@ public class DynomiteAdmin {
 	public Response getSeeds() {
 		try {
 			final List<String> seeds = ii.getSeeds();
-			return Response.ok(StringUtils.join(seeds, '|')).build();
+			return Response.ok(StringUtils.join(seeds, '|'), MediaType.TEXT_PLAIN).build();
 		} catch (Exception e) {
 			logger.error("Error while executing get_seeds", e);
 			return Response.serverError().build();

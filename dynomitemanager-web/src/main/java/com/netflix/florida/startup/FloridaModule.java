@@ -53,6 +53,7 @@ import com.netflix.nfsidecar.identity.IMembership;
 import com.netflix.nfsidecar.identity.InstanceEnvIdentity;
 import com.netflix.nfsidecar.instance.InstanceDataRetriever;
 import com.netflix.nfsidecar.instance.LocalInstanceDataRetriever;
+import com.netflix.nfsidecar.instance.DockerInstanceDataRetriever;
 import com.netflix.nfsidecar.instance.VpcInstanceDataRetriever;
 import com.netflix.nfsidecar.resources.env.IEnvVariables;
 import com.netflix.nfsidecar.resources.env.InstanceEnvVariables;
@@ -112,7 +113,8 @@ public final class FloridaModule extends AbstractModule {
         bind(Restore.class).to(S3Restore.class);
         
         /* Local */
-        bind(InstanceDataRetriever.class).to(LocalInstanceDataRetriever.class);
+        // bind(InstanceDataRetriever.class).to(LocalInstanceDataRetriever.class);
+        bind(InstanceDataRetriever.class).to(DockerInstanceDataRetriever.class);
 
 
         /* Netflix */

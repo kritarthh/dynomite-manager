@@ -20,18 +20,17 @@ public class InstanceEnvVariables implements IEnvVariables {
 
     @Override
     public String getDynomiteClusterName() {
-        String clusterName = System.getenv("NETFLIX_APP");
-/*        if (StringUtils.isBlank(clusterName)) {
+        String clusterName = System.getenv("APP");
+        if (StringUtils.isBlank(clusterName)) {
             logger.warn("Cluster name variable not defined. Falling back to FP " + config.getDynomiteClusterName());
             clusterName = config.getDynomiteClusterName();
         }
-        */
         return clusterName;
     }
 
     @Override
     public String getRegion() {
-        String region = System.getenv("EC2_REGION");
+        String region = System.getenv("REGION");
         if (StringUtils.isBlank(region)) {
             logger.warn("Region environment variable not defined. Falling back to " + config.getRegion());
             region = config.getRegion();
@@ -41,7 +40,7 @@ public class InstanceEnvVariables implements IEnvVariables {
 
     @Override
     public String getRack() {
-        String rack = System.getenv("NETFLIX_AUTO_SCALE_GROUP");
+        String rack = System.getenv("AZ");
         if (StringUtils.isBlank(rack)) {
             logger.error("Rack environment variable not defined. Falling back to " + config.getRack());
             rack = config.getRack();

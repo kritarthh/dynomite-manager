@@ -43,7 +43,7 @@ public interface AWSCommonConfig {
 
     // Backup and Restore
 
-    @DefaultValue("us-east-1.dynomite-backup-test")
+    @DefaultValue("us-east-1.dynoman-backup-test")
     @PropertyName(name = "dyno.backup.bucket.name") // TODO: For a common
                                                     // default value we probably
                                                     // have to result to defined

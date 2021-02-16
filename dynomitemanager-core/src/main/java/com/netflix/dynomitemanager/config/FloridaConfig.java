@@ -19,7 +19,7 @@ import com.netflix.archaius.api.annotations.Configuration;
 import com.netflix.archaius.api.annotations.DefaultValue;
 import com.netflix.archaius.api.annotations.PropertyName;
 
-@Configuration(prefix = "florida")
+@Configuration(prefix = "romeo")
 public interface FloridaConfig {
 
     /**
@@ -49,7 +49,7 @@ public interface FloridaConfig {
      * @return Cluster name if the environment variable for cluster name does
      *         not exist
      */
-    @DefaultValue("dynomite_demo1")
+    @DefaultValue("dynomite_demo")
     @PropertyName(name = "dyno.clustername")
     public String getDynomiteClusterName();
 

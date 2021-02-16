@@ -139,7 +139,7 @@ public class InstanceDataDAOCassandra {
             clm.putColumn(CN_ID, Integer.toString(instance.getId()), null);
             clm.putColumn(CN_APPID, instance.getApp(), null);
             clm.putColumn(CN_AZ, instance.getZone(), null);
-            clm.putColumn(CN_DC, commonConfig.getRack(), null);
+            clm.putColumn(CN_DC, instance.getRack(), null);
             clm.putColumn(CN_INSTANCEID, instance.getInstanceId(), null);
             clm.putColumn(CN_HOSTNAME, instance.getHostName(), null);
             clm.putColumn(CN_DYNOMITE_PORT, Integer.toString(instance.getDynomitePort()), null);
@@ -271,7 +271,7 @@ public class InstanceDataDAOCassandra {
 
             final String selectClause = String.format(
                     "SELECT * FROM %s USING CONSISTENCY LOCAL_QUORUM WHERE %s = '%s' ", CF_NAME_TOKENS, CN_APPID, app);
-            logger.debug(selectClause);
+            logger.info(selectClause);
 
             final ColumnFamily<String, String> CF_TOKENS_NEW = ColumnFamily.newColumnFamily(KS_NAME,
                     StringSerializer.get(), StringSerializer.get());
