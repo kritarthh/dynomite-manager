@@ -60,7 +60,7 @@ public class EcsMembership implements IMembership {
     private final IEnvVariables envVariables;
 
     @Inject
-    public AWSMembership(ICredential provider, @Named("awsroleassumption") ICredential crossAccountProvider,
+    public EcsMembership(ICredential provider, @Named("awsroleassumption") ICredential crossAccountProvider,
             InstanceEnvIdentity insEnvIdentity, InstanceDataRetriever retriever, IEnvVariables envVariables) {
         this.provider = provider;
         this.crossAccountProvider = crossAccountProvider;
