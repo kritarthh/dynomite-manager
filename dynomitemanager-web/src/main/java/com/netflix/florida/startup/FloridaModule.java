@@ -104,9 +104,10 @@ public final class FloridaModule extends AbstractModule {
         /* AWS binding */
         //bind(InstanceDataRetriever.class).to(VpcInstanceDataRetriever.class);
         // bind(IMembership.class).to(AWSMembership.class);
-        bind(IMembership.class).to(LocalMembership.class);
+        bind(IMembership.class).to(EcsMembership.class);
+        // bind(IMembership.class).to(LocalMembership.class);
         bind(ICredential.class).to(IAMCredential.class);
-        // bind(ICredential.class).annotatedWith(Names.named("awsroleassumption")).to(AwsRoleAssumptionCredential.class);
+        bind(ICredential.class).annotatedWith(Names.named("awsroleassumption")).to(AwsRoleAssumptionCredential.class);
         // bind(InstanceEnvIdentity.class).to(AwsInstanceEnvIdentity.class);
         bind(InstanceEnvIdentity.class).to(LocalInstanceEnvIdentity.class);
         bind(Backup.class).to(S3Backup.class);
@@ -114,7 +115,8 @@ public final class FloridaModule extends AbstractModule {
         
         /* Local */
         // bind(InstanceDataRetriever.class).to(LocalInstanceDataRetriever.class);
-        bind(InstanceDataRetriever.class).to(DockerInstanceDataRetriever.class);
+        // bind(InstanceDataRetriever.class).to(DockerInstanceDataRetriever.class);
+        bind(InstanceDataRetriever.class).to(EcsInstanceDataRetriever.class);
 
 
         /* Netflix */
