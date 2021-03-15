@@ -28,8 +28,8 @@ import com.amazonaws.services.autoscaling.AmazonAutoScalingClient;
 import com.amazonaws.services.autoscaling.model.AutoScalingGroup;
 import com.amazonaws.services.autoscaling.model.DescribeAutoScalingGroupsRequest;
 import com.amazonaws.services.autoscaling.model.DescribeAutoScalingGroupsResult;
-import com.amazonaws.services.autoscaling.model.Instance;
 import com.amazonaws.services.autoscaling.model.UpdateAutoScalingGroupRequest;
+import com.amazonaws.services.autoscaling.model.Instance;
 import com.amazonaws.services.ec2.AmazonEC2;
 import com.amazonaws.services.ec2.AmazonEC2Client;
 import com.amazonaws.services.ec2.model.AuthorizeSecurityGroupIngressRequest;
@@ -39,6 +39,13 @@ import com.amazonaws.services.ec2.model.Filter;
 import com.amazonaws.services.ec2.model.IpPermission;
 import com.amazonaws.services.ec2.model.RevokeSecurityGroupIngressRequest;
 import com.amazonaws.services.ec2.model.SecurityGroup;
+import com.amazonaws.services.ecs.model.Task;
+import com.amazonaws.services.ecs.model.DescribeTasksRequest;
+import com.amazonaws.services.ecs.model.DescribeTasksResult;
+import com.amazonaws.services.ecs.model.ListTasksRequest;
+import com.amazonaws.services.ecs.model.ListTasksResult;
+import com.amazonaws.services.ecs.AmazonECS;
+import com.amazonaws.services.ecs.AmazonECSClient;
 import com.google.common.collect.Lists;
 import com.google.inject.Inject;
 import com.google.inject.name.Named;
@@ -72,17 +79,17 @@ public class EcsMembership implements IMembership {
 
     @Override
     public List<String> getRacMembership() {
-        AmazonAutoScaling client = null;
+        AmazonECS client = null;
         try {
             client = getEcsClient();
             ListTasksRequest listReq = new ListTasksRequest().withCluster("qa-dynomite");
-            ListTasksResult listRes = client.listTasks(ecsReq);
+            ListTasksResult listRes = client.listTasks(listReq);
 
             DescribeTasksRequest desReq = new DescribeTasksRequest().withTasks(listRes.getTaskArns());
-            DescribeTasksResult desRes = client.describeTasks(ecsReq);
+            DescribeTasksResult desRes = client.describeTasks(desReq);
 
             List<String> instanceIds = Lists.newArrayList();
-            for (Task task : res.getTasks()) {
+            for (Task task : desRes.getTasks()) {
                 if (task.getAvailabilityZone().equals(envVariables.getRack()))
                     instanceIds.add(task.getTaskArn());
             }
@@ -105,17 +112,17 @@ public class EcsMembership implements IMembership {
      */
     @Override
     public int getRacMembershipSize() {
-        AmazonAutoScaling client = null;
+        AmazonECS client = null;
         try {
             client = getEcsClient();
             ListTasksRequest listReq = new ListTasksRequest().withCluster("qa-dynomite");
-            ListTasksResult listRes = client.listTasks(ecsReq);
+            ListTasksResult listRes = client.listTasks(listReq);
 
             DescribeTasksRequest desReq = new DescribeTasksRequest().withTasks(listRes.getTaskArns());
-            DescribeTasksResult desRes = client.describeTasks(ecsReq);
+            DescribeTasksResult desRes = client.describeTasks(desReq);
 
             List<String> instanceIds = Lists.newArrayList();
-            for (Task task : res.getTasks()) {
+            for (Task task : desRes.getTasks()) {
                 if (task.getAvailabilityZone().equals(envVariables.getRack()))
                     instanceIds.add(task.getTaskArn());
             }
@@ -202,11 +209,9 @@ public class EcsMembership implements IMembership {
         return client;
     }
 
-    protected AmazonEC2 getEcsClient() {
+    protected AmazonECS getEcsClient() {
         AmazonECS client = new AmazonECSClient(provider.getAwsCredentialProvider());
         client.setEndpoint("ecs." + envVariables.getRegion() + ".amazonaws.com");
         return client;
     }
-    ListTasksRequest request = new ListTasksRequest().withCluster("default");
-    ListTasksResult response = client.listTasks(request);
 }
