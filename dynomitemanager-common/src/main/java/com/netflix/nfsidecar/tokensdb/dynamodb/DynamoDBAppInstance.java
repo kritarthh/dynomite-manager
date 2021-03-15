@@ -17,7 +17,7 @@ package com.netflix.nfsidecar.tokensdb.dynamodb;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.*;
 
-@DynamoDBTable(tableName = "app_instance")
+@DynamoDBTable(tableName = "qa-dynomite-tokensdb")
 public class DynamoDBAppInstance {
 
     static final String APP_INSTANCE_APP_RACK_GSI = "app_instance-app-rack-gsi";

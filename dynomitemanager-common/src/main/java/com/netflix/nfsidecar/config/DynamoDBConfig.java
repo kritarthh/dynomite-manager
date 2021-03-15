@@ -32,7 +32,7 @@ public interface DynamoDBConfig {
     /**
      * @return DynamoDB region where table exists
      */
-    @DefaultValue("")
+    @DefaultValue("qa-dynomite-tokensdb")
     @PropertyName(name = "tableName.prefix")
     String getDynamoDBTableNamePrefix();
 
