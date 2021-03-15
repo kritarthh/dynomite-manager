@@ -82,7 +82,8 @@ public class EcsMembership implements IMembership {
         AmazonECS client = null;
         try {
             client = getEcsClient();
-            ListTasksRequest listReq = new ListTasksRequest().withCluster("qa-dynomite");
+            // ListTasksRequest listReq = new ListTasksRequest().withCluster("qa-dynomite");
+            ListTasksRequest listReq = new ListTasksRequest().withServiceName("romeo");
             ListTasksResult listRes = client.listTasks(listReq);
 
             DescribeTasksRequest desReq = new DescribeTasksRequest().withTasks(listRes.getTaskArns());
