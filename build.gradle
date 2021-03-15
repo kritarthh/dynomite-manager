@@ -26,7 +26,9 @@ subprojects {
     targetCompatibility = '1.8'
     
     repositories {
-        jcenter()
+        google()
+        mavenCentral()
+        //jcenter()
     }
 
     dependencies {
