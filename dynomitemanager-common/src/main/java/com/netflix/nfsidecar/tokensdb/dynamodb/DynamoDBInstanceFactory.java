@@ -61,7 +61,7 @@ public class DynamoDBInstanceFactory implements IAppsInstanceFactory {
     }
 
     @Override
-    public AppsInstance create(String app, int id, String instanceID, String hostname, String ip, String zone, Map<String, Object> volumes, String payload, String rack) {
+    public AppsInstance create(String app, int id, String instanceID, String hostname, int dynomitePort, int dynomiteSecurePort, int dynomiteSecureStoragePort, int peerPort, String ip, String zone, Map<String, Object> volumes, String payload, String rack) {
 
         DynamoDBAppInstance dynamoDBAppInstance = new DynamoDBAppInstance();
 

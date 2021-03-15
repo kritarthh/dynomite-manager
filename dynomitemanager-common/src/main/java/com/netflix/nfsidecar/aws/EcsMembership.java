@@ -89,7 +89,7 @@ public class EcsMembership implements IMembership {
             DescribeTasksResult desRes = client.describeTasks(desReq);
 
             List<String> instanceIds = Lists.newArrayList();
-            for (Task task : desRes.getTasks()) {
+            for (Task task: desRes.getTasks()) {
                 if (task.getAvailabilityZone().equals(envVariables.getRack()))
                     instanceIds.add(task.getTaskArn());
             }
@@ -122,7 +122,7 @@ public class EcsMembership implements IMembership {
             DescribeTasksResult desRes = client.describeTasks(desReq);
 
             List<String> instanceIds = Lists.newArrayList();
-            for (Task task : desRes.getTasks()) {
+            for (Task task: desRes.getTasks()) {
                 if (task.getAvailabilityZone().equals(envVariables.getRack()))
                     instanceIds.add(task.getTaskArn());
             }
