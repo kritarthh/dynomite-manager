@@ -124,7 +124,7 @@ public class InstanceDataDAODynamoDB {
         DynamoDBQueryExpression<DynamoDBAppInstance> dynamoDBQueryExpression = new DynamoDBQueryExpression<DynamoDBAppInstance>()
                 .withIndexName(APP_INSTANCE_APP_RACK_GSI)
                 .withHashKeyValues(dynamoDBAppInstance)
-                .withRangeKeyCondition("rack", condition)
+                .withRangeKeyCondition("datacenter", condition)
                 .withConsistentRead(false);
 
         PaginatedQueryList<DynamoDBAppInstance> paginatedQueryList = dynamoDBMapper.query(DynamoDBAppInstance.class, dynamoDBQueryExpression);

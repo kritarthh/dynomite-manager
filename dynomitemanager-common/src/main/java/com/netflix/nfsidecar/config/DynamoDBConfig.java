@@ -36,5 +36,4 @@ public interface DynamoDBConfig {
     @PropertyName(name = "tableName.prefix")
     String getDynamoDBTableNamePrefix();
 
-
 }
