@@ -65,8 +65,8 @@ public class InstanceDataDAODynamoDB {
         dynamoDBMapper = new DynamoDBMapper(amazonDynamoDB, dynamoDBMapperConfig);
 
         saveExpression = new DynamoDBSaveExpression();
-        Map<String, ExpectedAttributeValue> saveCondition = new HashMap<>();
-        saveCondition.put("key", new ExpectedAttributeValue().withExists(false));
+        // Map<String, ExpectedAttributeValue> saveCondition = new HashMap<>();
+        // saveCondition.put("key", new ExpectedAttributeValue().withExists(false));
         saveExpression.setExpected(saveCondition);
     }
 
