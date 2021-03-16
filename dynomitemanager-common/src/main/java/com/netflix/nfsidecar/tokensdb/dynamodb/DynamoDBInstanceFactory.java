@@ -71,9 +71,6 @@ public class DynamoDBInstanceFactory implements IAppsInstanceFactory {
         dynamoDBAppInstance.setId(id);
         dynamoDBAppInstance.setInstanceId(instanceID);
         dynamoDBAppInstance.setHostname(hostname);
-        dynamoDBAppInstance.setDynomitePort(dynomitePort);
-        dynamoDBAppInstance.setDynomiteSecurePort(dynomiteSecurePort);
-        dynamoDBAppInstance.setDynomiteSecureStoragePort(dynomiteSecureStoragePort);
         dynamoDBAppInstance.setPeerPort(peerPort);
         dynamoDBAppInstance.setPublicIp(ip);
         dynamoDBAppInstance.setRack(rack);
