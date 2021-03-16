@@ -86,7 +86,7 @@ public class EcsMembership implements IMembership {
             ListTasksRequest listReq = new ListTasksRequest().withCluster("qa-dynomite").withServiceName("romeo");
             ListTasksResult listRes = client.listTasks(listReq);
 
-            DescribeTasksRequest desReq = new DescribeTasksRequest().withTasks(listRes.getTaskArns());
+            DescribeTasksRequest desReq = new DescribeTasksRequest().withTasks(listRes.getTaskArns()).withCluster("qa-dynomite");
             DescribeTasksResult desRes = client.describeTasks(desReq);
 
             List<String> instanceIds = Lists.newArrayList();
@@ -119,7 +119,7 @@ public class EcsMembership implements IMembership {
             ListTasksRequest listReq = new ListTasksRequest().withCluster("qa-dynomite").withServiceName("romeo");
             ListTasksResult listRes = client.listTasks(listReq);
 
-            DescribeTasksRequest desReq = new DescribeTasksRequest().withTasks(listRes.getTaskArns());
+            DescribeTasksRequest desReq = new DescribeTasksRequest().withTasks(listRes.getTaskArns()).withCluster("qa-dynomite");
             DescribeTasksResult desRes = client.describeTasks(desReq);
 
             List<String> instanceIds = Lists.newArrayList();
