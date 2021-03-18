@@ -229,7 +229,6 @@ public class InstanceDataDAOCassandra {
                 insertInto(CF_NAME_LOCKS)
                         .value(CN_KEY, literal(choosingKey))
                         .value(CN_INSTANCEID, literal(instance.getInstanceId()))
-                        .usingTtl(6)
                         .build()
                         .setConsistencyLevel(ConsistencyLevel.LOCAL_QUORUM)
         );
@@ -256,7 +255,6 @@ public class InstanceDataDAOCassandra {
                 insertInto(CF_NAME_LOCKS)
                         .value(CN_KEY, literal(lockKey))
                         .value(CN_INSTANCEID, literal(instance.getInstanceId()))
-                        .usingTtl(600)
                         .build()
                         .setConsistencyLevel(ConsistencyLevel.LOCAL_QUORUM)
         );
