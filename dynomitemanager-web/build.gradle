@@ -56,7 +56,7 @@ dependencies {
         compileOnly "javax.servlet:javax.servlet-api:latest.release"
     }
 
-    compile 'com.sun.jersey:jersey-servet:latest.release'
+    compile 'com.sun.jersey:jersey-servlet:latest.release'
 }
 
 war.archiveName = "dynomite-manager.war"
