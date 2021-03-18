@@ -17,10 +17,10 @@ dependencies {
     compile "javax.ws.rs:jsr311-api:1.1.1"
     compile "joda-time:joda-time:2.0"
     compile "commons-configuration:commons-configuration:1.5"
-    compile 'com.datastax.oss:java-driver-core:4.1.0'
-    compile 'com.datastax.oss:java-driver-query-builder:4.1.0'
+    compile 'com.datastax.oss:java-driver-core:4.4.0'
+    compile 'com.datastax.oss:java-driver-query-builder:4.4.0'
     compile 'com.netflix.eureka:eureka-client:1.9.12'
-    compile 'software.aws.mcs:aws-sigv4-auth-cassandra-java-driver-plugin:4.0.4'
+    compile 'software.aws.mcs:aws-sigv4-auth-cassandra-java-driver-plugin:4.0.2'
 
     //Unit test
     testCompile 'junit:junit:4.+'

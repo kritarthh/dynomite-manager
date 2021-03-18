@@ -396,10 +396,10 @@ public class InstanceDataDAOCassandra {
         ins.setApp(row.getString(CN_APPID));
         ins.setZone(row.getString(CN_AZ));
         ins.setHost(row.getString(CN_HOSTNAME));
-        ins.setDynomitePort(!row.isNull(CN_DYNOMITE_PORT) ? row.getInt(CN_DYNOMITE_PORT) : commonConfig.getDynomitePort());
-        ins.setDynomiteSecurePort(!row.isNull(CN_DYNOMITE_SECURE_PORT) ? row.getInt(CN_DYNOMITE_SECURE_PORT) : commonConfig.getDynomiteSecurePort());
-        ins.setDynomiteSecureStoragePort(!row.isNull(CN_DYNOMITE_SECURE_STORAGE_PORT) ? row.getInt(CN_DYNOMITE_SECURE_STORAGE_PORT) : commonConfig.getDynomiteSecureStoragePort());
-        ins.setPeerPort(!row.isNull(CN_PEER_PORT) ? row.getInt(CN_PEER_PORT) : commonConfig.getDynomitePeerPort());
+        ins.setDynomitePort(commonConfig.getDynomitePort());
+        ins.setDynomiteSecurePort(commonConfig.getDynomiteSecurePort());
+        ins.setDynomiteSecureStoragePort(commonConfig.getDynomiteSecureStoragePort());
+        ins.setPeerPort(commonConfig.getDynomitePeerPort());
         ins.setHostIP(row.getString(CN_EIP));
         ins.setId(Integer.parseInt(row.getString(CN_ID)));
         ins.setInstanceId(row.getString(CN_INSTANCEID));
