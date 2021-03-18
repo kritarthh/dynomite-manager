@@ -127,10 +127,6 @@ public class InstanceDataDAOCassandra {
                             .value(CN_LOCATION, literal(commonConfig.getRack()))
                             .value(CN_INSTANCEID, literal(instance.getInstanceId()))
                             .value(CN_HOSTNAME, literal(instance.getHostName()))
-                            .value(CN_DYNOMITE_PORT, literal(instance.getDynomitePort()))
-                            .value(CN_DYNOMITE_SECURE_PORT, literal(instance.getDynomiteSecurePort()))
-                            .value(CN_DYNOMITE_SECURE_STORAGE_PORT, literal(instance.getDynomiteSecureStoragePort()))
-                            .value(CN_PEER_PORT, literal(instance.getPeerPort()))
                             .value(CN_EIP, literal(instance.getHostIP()))
                             // 'token' is a reserved name in cassandra, so it needs to be double-quoted
                             .value("\"" + CN_TOKEN + "\"", literal(instance.getToken()))
@@ -167,10 +163,6 @@ public class InstanceDataDAOCassandra {
                             .setColumn(CN_LOCATION, literal(commonConfig.getRack()))
                             .setColumn(CN_INSTANCEID, literal(instance.getInstanceId()))
                             .setColumn(CN_HOSTNAME, literal(instance.getHostName()))
-                            .setColumn(CN_DYNOMITE_PORT, literal(instance.getDynomitePort()))
-                            .setColumn(CN_DYNOMITE_SECURE_PORT, literal(instance.getDynomiteSecurePort()))
-                            .setColumn(CN_DYNOMITE_SECURE_STORAGE_PORT, literal(instance.getDynomiteSecureStoragePort()))
-                            .setColumn(CN_PEER_PORT, literal(instance.getPeerPort()))
                             .setColumn(CN_EIP, literal(instance.getHostIP()))
                             // 'token' is a reserved name in cassandra, so it needs to be double-quoted
                             .setColumn("\"" + CN_TOKEN + "\"", literal(instance.getToken()))
