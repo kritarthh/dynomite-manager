@@ -236,7 +236,6 @@ public class InstanceDataDAOCassandra {
                     deleteFrom(CF_NAME_LOCKS)
                             .whereColumn(CN_KEY).isEqualTo(literal(choosingKey))
                             .whereColumn(CN_INSTANCEID).isEqualTo(literal(instance.getInstanceId()))
-                            .allowFiltering()
                             .build()
             );
             throw new Exception(String.format("More than 1 contender for lock %s %d", choosingKey, count));
@@ -271,7 +270,6 @@ public class InstanceDataDAOCassandra {
                 deleteFrom(CF_NAME_LOCKS)
                         .whereColumn(CN_KEY).isEqualTo(literal(choosingKey))
                         .whereColumn(CN_INSTANCEID).isEqualTo(literal(instance.getInstanceId()))
-                        .allowFiltering()
                         .build()
         );
     }
@@ -296,7 +294,6 @@ public class InstanceDataDAOCassandra {
                 deleteFrom(CF_NAME_LOCKS)
                         .whereColumn(CN_KEY).isEqualTo(literal(lockKey))
                         .whereColumn(CN_INSTANCEID).isEqualTo(literal(instance.getInstanceId()))
-                        .allowFiltering()
                         .build()
         );
 
@@ -305,7 +302,6 @@ public class InstanceDataDAOCassandra {
                 deleteFrom(CF_NAME_LOCKS)
                         .whereColumn(CN_KEY).isEqualTo(literal(choosingKey))
                         .whereColumn(CN_INSTANCEID).isEqualTo(literal(instance.getInstanceId()))
-                        .allowFiltering()
                         .build()
         );
     }
