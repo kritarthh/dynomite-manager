@@ -21,6 +21,7 @@ WITH CUSTOM_PROPERTIES = {
 CREATE TABLE "dyno_bootstrap"."locks"(
 	"key" text,
 	"instanceid" text,
+	"updatetime" timeuuid,
 	PRIMARY KEY(("key", "instanceid")))
 WITH CUSTOM_PROPERTIES = {
 	'capacity_mode':{'throughput_mode':'PAY_PER_REQUEST'},

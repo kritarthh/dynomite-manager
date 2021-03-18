@@ -218,7 +218,7 @@ public class InstanceDataDAOCassandra {
         final List<Row> preCheck = fetchRows(CF_NAME_LOCKS, CN_KEY, lockKey);
         // first remove the locks older than 600 seconds
         for (Row r: preCheck) {
-            UUID uuid = UUID.fromString(r.getString(CN_UPDATETIME));
+            UUID uuid = UUID.fromString(r.get(CN_UPDATETIME).toString());
             long time = getTimeFromUUID(uuid);
             if ((System.currentTimeMillis()-time)/1000 > ttl) {
                 // delete this lock and continue
