@@ -214,18 +214,18 @@ public class InstanceDataDAOCassandra {
         return rows.size();
     }
 
-    private void removeExpiredLocks(String lockKey, String instanceId, int ttl) {
+    private void removeExpiredLocks(String lockKey, int ttl) {
         final List<Row> preCheck = fetchRows(CF_NAME_LOCKS, CN_KEY, lockKey);
         // first remove the locks older than 600 seconds
         for (Row r: preCheck) {
-            UUID uuid = UUID.fromString(r.get(CN_UPDATETIME).toString());
+            UUID uuid = r.get(CN_UPDATETIME, TypeCodecs.TIMEUUID);
             long time = getTimeFromUUID(uuid);
             if ((System.currentTimeMillis()-time)/1000 > ttl) {
                 // delete this lock and continue
                 this.bootSession.execute(
                         deleteFrom(CF_NAME_LOCKS)
                                 .whereColumn(CN_KEY).isEqualTo(literal(lockKey))
-                                .whereColumn(CN_INSTANCEID).isEqualTo(literal(instanceId))
+                                .whereColumn(CN_INSTANCEID).isEqualTo(literal(r.getString(CN_INSTANCEID)))
                                 .build()
                                 .setConsistencyLevel(ConsistencyLevel.LOCAL_QUORUM)
                 );
@@ -242,7 +242,7 @@ public class InstanceDataDAOCassandra {
      */
     private void getLock(AppsInstance instance) throws Exception {
         final String choosingKey = getChoosingKey(instance);
-        removeExpiredLocks(choosingKey, instance.getInstanceId(), 6);
+        removeExpiredLocks(choosingKey, 6);
 
         this.bootSession.execute(
                 insertInto(CF_NAME_LOCKS)
@@ -267,7 +267,7 @@ public class InstanceDataDAOCassandra {
         }
 
         final String lockKey = getLockingKey(instance);
-        removeExpiredLocks(lockKey, instance.getInstanceId(), 600);
+        removeExpiredLocks(lockKey, 600);
 
         final List<Row> preCheck = fetchRows(CF_NAME_LOCKS, CN_KEY, lockKey);
         if (preCheck.size() > 0 && preCheck.stream().noneMatch(row -> instance.getInstanceId().equals(row.getString(CN_INSTANCEID)))) {
