@@ -45,11 +45,11 @@ public interface CassCommonConfig {
     /**
      * @return the port that the bootstrap cluster can be contacted
      */
-    @DefaultValue("9160")
+    @DefaultValue("9142")
     @PropertyName(name = "dyno.sidecore.port")
     public int getCassandraPort();
 
-    @DefaultValue("10.0.100.254")
+    @DefaultValue("cassandra.us-west-1.amazonaws.com")
     @PropertyName(name = "dyno.sidecore.seeds")
     public String getCassandraSeeds();
 

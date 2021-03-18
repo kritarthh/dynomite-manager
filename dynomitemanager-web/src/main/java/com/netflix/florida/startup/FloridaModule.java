@@ -122,11 +122,11 @@ public final class FloridaModule extends AbstractModule {
         bind(InstanceDataRetriever.class).to(EcsInstanceDataRetriever.class);
 
         /* Use DynamoDB as persistence store */
-        bind(IAppsInstanceFactory.class).to(DynamoDBInstanceFactory.class);
+        //bind(IAppsInstanceFactory.class).to(DynamoDBInstanceFactory.class);
 
 
         /* Netflix */
-//        bind(IAppsInstanceFactory.class).to(CassandraInstanceFactory.class);
+        bind(IAppsInstanceFactory.class).to(CassandraInstanceFactory.class);
         bind(HostSupplier.class).to(LocalHostSupplier.class);
         // bind(HostSupplier.class).to(CassandraLocalHostsSupplier.class);
         // bind(HostSupplier.class).to(EurekaHostsSupplier.class);

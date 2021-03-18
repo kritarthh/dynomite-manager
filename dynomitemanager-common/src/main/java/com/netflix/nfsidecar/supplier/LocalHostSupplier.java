@@ -42,7 +42,7 @@ public class LocalHostSupplier implements HostSupplier {
                 throw new RuntimeException(errMsg);
 
             for (String cassHost : cassHostnames) {
-                hosts.add(new Host(cassHost, 9160));
+                hosts.add(new Host(cassHost, 9142));
             }
 
         } else {
