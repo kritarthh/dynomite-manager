@@ -73,6 +73,11 @@ public class InstanceDataDAOCassandra {
     private final Lock read  = readWriteLock.readLock();
     private final Lock write = readWriteLock.writeLock();
 
+    static final long NUM_100NS_INTERVALS_SINCE_UUID_EPOCH = 0x01b21dd213814000L;
+    public static long getTimeFromUUID(UUID uuid) {
+        return (uuid.timestamp() - NUM_100NS_INTERVALS_SINCE_UUID_EPOCH) / 10000;
+    }
+
     @Inject
     public InstanceDataDAOCassandra(CommonConfig commonConfig, CassCommonConfig cassCommonConfig, HostSupplier hostSupplier) {
         this.cassCommonConfig = cassCommonConfig;
@@ -208,6 +213,26 @@ public class InstanceDataDAOCassandra {
         return rows.size();
     }
 
+    private void removeExpiredLocks(String lockKey, String instanceId, int ttl) {
+        final List<Row> preCheck = fetchRows(CF_NAME_LOCKS, CN_KEY, lockKey);
+        // first remove the locks older than 600 seconds
+        for (Row r: preCheck) {
+            UUID uuid = UUID.fromString(r.getString(CN_UPDATETIME));
+            long time = getTimeFromUUID(uuid);
+            if ((System.currentTimeMillis()-time)/1000 > ttl) {
+                // delete this lock and continue
+                this.bootSession.execute(
+                        deleteFrom(CF_NAME_LOCKS)
+                                .whereColumn(CN_KEY).isEqualTo(literal(lockKey))
+                                .whereColumn(CN_INSTANCEID).isEqualTo(literal(instanceId))
+                                .build()
+                                .setConsistencyLevel(ConsistencyLevel.LOCAL_QUORUM)
+                );
+                logger.info("Removed expired lock " + lockKey);
+            }
+        }
+    }
+
     /*
      * To get a lock on the row - Create a choosing row and make sure there are
      * no contenders. If there are bail out. Also delete the column when bailing
@@ -216,14 +241,17 @@ public class InstanceDataDAOCassandra {
      */
     private void getLock(AppsInstance instance) throws Exception {
         final String choosingKey = getChoosingKey(instance);
+        removeExpiredLocks(choosingKey, instance.getInstanceId(), 6);
 
         this.bootSession.execute(
                 insertInto(CF_NAME_LOCKS)
                         .value(CN_KEY, literal(choosingKey))
                         .value(CN_INSTANCEID, literal(instance.getInstanceId()))
+                        .value(CN_UPDATETIME, now())
                         .build()
                         .setConsistencyLevel(ConsistencyLevel.LOCAL_QUORUM)
         );
+
         final long count = rowCount(CF_NAME_LOCKS, CN_KEY, choosingKey);
         if (count > 1) {
             // Need to delete my entry
@@ -238,6 +266,8 @@ public class InstanceDataDAOCassandra {
         }
 
         final String lockKey = getLockingKey(instance);
+        removeExpiredLocks(lockKey, instance.getInstanceId(), 600);
+
         final List<Row> preCheck = fetchRows(CF_NAME_LOCKS, CN_KEY, lockKey);
         if (preCheck.size() > 0 && preCheck.stream().noneMatch(row -> instance.getInstanceId().equals(row.getString(CN_INSTANCEID)))) {
             throw new Exception(String.format("Lock already taken %s", lockKey));
@@ -247,6 +277,7 @@ public class InstanceDataDAOCassandra {
                 insertInto(CF_NAME_LOCKS)
                         .value(CN_KEY, literal(lockKey))
                         .value(CN_INSTANCEID, literal(instance.getInstanceId()))
+                        .value(CN_UPDATETIME, now())
                         .build()
                         .setConsistencyLevel(ConsistencyLevel.LOCAL_QUORUM)
         );
