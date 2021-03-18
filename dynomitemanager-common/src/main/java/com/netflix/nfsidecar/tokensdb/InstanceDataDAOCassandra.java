@@ -207,13 +207,13 @@ public class InstanceDataDAOCassandra {
     }
 
     private long rowCount(final String table, final String keyColumn, final String key) {
-        final Row row = this.bootSession.execute(
+        final List<Row> rows = this.bootSession.execute(
                 selectFrom(table)
-                        .countAll()
+                        .all()
                         .whereColumn(keyColumn).isEqualTo(literal(key))
                         .build()
-        ).one();
-        return row != null ? row.getLong(0) : 0;
+        );
+        return rows.size();
     }
 
     /*
