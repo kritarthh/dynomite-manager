@@ -20,6 +20,7 @@ dependencies {
     compile 'com.datastax.oss:java-driver-core:4.1.0'
     compile 'com.datastax.oss:java-driver-query-builder:4.1.0'
     compile 'com.netflix.eureka:eureka-client:1.9.12'
+    compile 'software.aws.mcs:aws-sigv4-auth-cassandra-java-driver-plugin:4.0.4'
 
     //Unit test
     testCompile 'junit:junit:4.+'

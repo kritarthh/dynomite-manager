@@ -1,6 +1,7 @@
 package com.netflix.nfsidecar.tokensdb;
 
 import com.datastax.oss.driver.api.core.CqlSession;
+import com.datastax.oss.driver.api.core.config.DriverConfigLoader;
 import com.datastax.oss.driver.api.core.cql.Row;
 import com.google.common.base.Strings;
 import com.google.common.base.Supplier;
@@ -434,11 +435,13 @@ public class InstanceDataDAOCassandra {
         final String datacenter = !Strings.isNullOrEmpty(cassCommonConfig.getCassandraDatacenterName())
                 ? cassCommonConfig.getCassandraDatacenterName() : commonConfig.getRegion();
 
+        DriverConfigLoader loader = DriverConfigLoader.fromClasspath("cassandra.conf");
         return CqlSession.builder()
-                .addContactPoints(contactPoints)
-                .withLocalDatacenter(datacenter)
-                .withKeyspace(KS_NAME)
-                .build();
+            .withConfigLoader(loader)
+            .addContactPoints(contactPoints)
+            .withLocalDatacenter(datacenter)
+            .withKeyspace(KS_NAME)
+            .build();
     }
 
     private Supplier<List<Host>> getSupplier() {
