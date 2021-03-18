@@ -130,7 +130,6 @@ public class InstanceDataDAOCassandra {
                             .value(CN_EIP, literal(instance.getHostIP()))
                             // 'token' is a reserved name in cassandra, so it needs to be double-quoted
                             .value("\"" + CN_TOKEN + "\"", literal(instance.getToken()))
-                            .value(CN_VOLUMES, literal(formatVolumes(instance.getVolumes())))
                             .value(CN_UPDATETIME, now())
                             .build()
                             .setConsistencyLevel(ConsistencyLevel.LOCAL_QUORUM)
@@ -166,7 +165,6 @@ public class InstanceDataDAOCassandra {
                             .setColumn(CN_EIP, literal(instance.getHostIP()))
                             // 'token' is a reserved name in cassandra, so it needs to be double-quoted
                             .setColumn("\"" + CN_TOKEN + "\"", literal(instance.getToken()))
-                            .setColumn(CN_VOLUMES, literal(formatVolumes(instance.getVolumes())))
                             .setColumn(CN_UPDATETIME, now())
                             .whereColumn(CN_KEY).isEqualTo(literal(key))
                             .build()
