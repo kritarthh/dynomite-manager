@@ -169,7 +169,6 @@ public class InstanceDataDAOCassandra {
                             .setColumn(CN_VOLUMES, literal(formatVolumes(instance.getVolumes())))
                             .setColumn(CN_UPDATETIME, now())
                             .whereColumn(CN_KEY).isEqualTo(literal(key))
-                            .allowFiltering()
                             .build()
                             .setConsistencyLevel(ConsistencyLevel.LOCAL_QUORUM)
             );
