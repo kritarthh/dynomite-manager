@@ -212,7 +212,7 @@ public class InstanceDataDAOCassandra {
                         .all()
                         .whereColumn(keyColumn).isEqualTo(literal(key))
                         .build()
-        );
+        ).all();
         return rows.size();
     }
 
