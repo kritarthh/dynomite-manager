@@ -236,6 +236,7 @@ public class InstanceDataDAOCassandra {
                     deleteFrom(CF_NAME_LOCKS)
                             .whereColumn(CN_KEY).isEqualTo(literal(choosingKey))
                             .whereColumn(CN_INSTANCEID).isEqualTo(literal(instance.getInstanceId()))
+                            .allowFiltering()
                             .build()
             );
             throw new Exception(String.format("More than 1 contender for lock %s %d", choosingKey, count));
@@ -270,6 +271,7 @@ public class InstanceDataDAOCassandra {
                 deleteFrom(CF_NAME_LOCKS)
                         .whereColumn(CN_KEY).isEqualTo(literal(choosingKey))
                         .whereColumn(CN_INSTANCEID).isEqualTo(literal(instance.getInstanceId()))
+                        .allowFiltering()
                         .build()
         );
     }
@@ -294,6 +296,7 @@ public class InstanceDataDAOCassandra {
                 deleteFrom(CF_NAME_LOCKS)
                         .whereColumn(CN_KEY).isEqualTo(literal(lockKey))
                         .whereColumn(CN_INSTANCEID).isEqualTo(literal(instance.getInstanceId()))
+                        .allowFiltering()
                         .build()
         );
 
@@ -302,6 +305,7 @@ public class InstanceDataDAOCassandra {
                 deleteFrom(CF_NAME_LOCKS)
                         .whereColumn(CN_KEY).isEqualTo(literal(choosingKey))
                         .whereColumn(CN_INSTANCEID).isEqualTo(literal(instance.getInstanceId()))
+                        .allowFiltering()
                         .build()
         );
     }
@@ -334,6 +338,7 @@ public class InstanceDataDAOCassandra {
                     selectFrom(CF_NAME_TOKENS)
                             .all()
                             .whereColumn(CN_APPID).isEqualTo(literal(app))
+                            .allowFiltering()
                             .build()
             ).all();
             for (final Row row : rows) {
@@ -374,6 +379,7 @@ public class InstanceDataDAOCassandra {
                             .whereColumn(CN_ID).isEqualTo(literal(id))
                             .whereColumn(CN_LOCATION).isEqualTo(literal(location))
                             .whereColumn(CN_DC).isEqualTo(literal(datacenter))
+                            .allowFiltering()
                             .build()
             ).one();
             if (row == null) {
