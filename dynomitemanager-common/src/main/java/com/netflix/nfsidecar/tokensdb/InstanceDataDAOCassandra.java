@@ -35,6 +35,7 @@ import static com.datastax.oss.driver.api.querybuilder.QueryBuilder.literal;
 import static com.datastax.oss.driver.api.querybuilder.QueryBuilder.now;
 import static com.datastax.oss.driver.api.querybuilder.QueryBuilder.selectFrom;
 import static com.datastax.oss.driver.api.querybuilder.QueryBuilder.update;
+import com.datastax.driver.core.ConsistencyLevel;
 
 @Singleton
 public class InstanceDataDAOCassandra {
@@ -227,6 +228,7 @@ public class InstanceDataDAOCassandra {
                         .value(CN_KEY, literal(choosingKey))
                         .value(CN_INSTANCEID, literal(instance.getInstanceId()))
                         .usingTtl(6)
+                        .setConsistencyLevel(ConsistencyLevel.LOCAL_QUORUM)
                         .build()
         );
         final long count = rowCount(CF_NAME_LOCKS, CN_KEY, choosingKey);

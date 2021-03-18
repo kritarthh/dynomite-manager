@@ -19,7 +19,7 @@ WITH CUSTOM_PROPERTIES = {
 };
 
 CREATE TABLE dyno_bootstrap.locks (
-    key blob,
+    key text,
     instanceid text,
     PRIMARY KEY (key)
 ) WITH COMPACT STORAGE
