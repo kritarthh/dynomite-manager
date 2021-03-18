@@ -37,6 +37,7 @@ import static com.datastax.oss.driver.api.querybuilder.QueryBuilder.now;
 import static com.datastax.oss.driver.api.querybuilder.QueryBuilder.selectFrom;
 import static com.datastax.oss.driver.api.querybuilder.QueryBuilder.update;
 import com.datastax.oss.driver.api.core.ConsistencyLevel;
+import com.datastax.oss.driver.api.core.type.codec.TypeCodecs;
 
 @Singleton
 public class InstanceDataDAOCassandra {
