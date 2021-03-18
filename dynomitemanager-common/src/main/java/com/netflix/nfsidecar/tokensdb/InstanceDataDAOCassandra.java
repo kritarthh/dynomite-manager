@@ -37,6 +37,7 @@ import static com.datastax.oss.driver.api.querybuilder.QueryBuilder.now;
 import static com.datastax.oss.driver.api.querybuilder.QueryBuilder.selectFrom;
 import static com.datastax.oss.driver.api.querybuilder.QueryBuilder.update;
 import com.datastax.oss.driver.api.core.ConsistencyLevel;
+import com.datastax.oss.driver.api.core.type.codec.TypeCodecs;
 
 @Singleton
 public class InstanceDataDAOCassandra {
@@ -218,7 +219,7 @@ public class InstanceDataDAOCassandra {
         final List<Row> preCheck = fetchRows(CF_NAME_LOCKS, CN_KEY, lockKey);
         // first remove the locks older than 600 seconds
         for (Row r: preCheck) {
-            UUID uuid = UUID.fromString(r.get(CN_UPDATETIME).toString());
+            UUID uuid = r.get(CN_UPDATETIME, TypeCodecs.TIMEUUID);
             long time = getTimeFromUUID(uuid);
             if ((System.currentTimeMillis()-time)/1000 > ttl) {
                 // delete this lock and continue
