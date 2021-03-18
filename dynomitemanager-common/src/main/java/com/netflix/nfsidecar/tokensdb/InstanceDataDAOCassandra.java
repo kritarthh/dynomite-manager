@@ -35,7 +35,7 @@ import static com.datastax.oss.driver.api.querybuilder.QueryBuilder.literal;
 import static com.datastax.oss.driver.api.querybuilder.QueryBuilder.now;
 import static com.datastax.oss.driver.api.querybuilder.QueryBuilder.selectFrom;
 import static com.datastax.oss.driver.api.querybuilder.QueryBuilder.update;
-import com.datastax.driver.core.ConsistencyLevel;
+import com.datastax.oss.driver.api.core.ConsistencyLevel;
 
 @Singleton
 public class InstanceDataDAOCassandra {
@@ -137,6 +137,7 @@ public class InstanceDataDAOCassandra {
                             .value(CN_VOLUMES, literal(formatVolumes(instance.getVolumes())))
                             .value(CN_UPDATETIME, now())
                             .build()
+                            .setConsistencyLevel(ConsistencyLevel.LOCAL_QUORUM)
             );
         } catch (final Exception e) {
             logger.error(e.getMessage(), e);
@@ -177,6 +178,7 @@ public class InstanceDataDAOCassandra {
                             .setColumn(CN_UPDATETIME, now())
                             .whereColumn(CN_KEY).isEqualTo(literal(key))
                             .build()
+                            .setConsistencyLevel(ConsistencyLevel.LOCAL_QUORUM)
             );
         } catch (final Exception e) {
             logger.error(e.getMessage(), e);
@@ -228,8 +230,8 @@ public class InstanceDataDAOCassandra {
                         .value(CN_KEY, literal(choosingKey))
                         .value(CN_INSTANCEID, literal(instance.getInstanceId()))
                         .usingTtl(6)
-                        .setConsistencyLevel(ConsistencyLevel.LOCAL_QUORUM)
                         .build()
+                        .setConsistencyLevel(ConsistencyLevel.LOCAL_QUORUM)
         );
         final long count = rowCount(CF_NAME_LOCKS, CN_KEY, choosingKey);
         if (count > 1) {
@@ -239,6 +241,7 @@ public class InstanceDataDAOCassandra {
                             .whereColumn(CN_KEY).isEqualTo(literal(choosingKey))
                             .whereColumn(CN_INSTANCEID).isEqualTo(literal(instance.getInstanceId()))
                             .build()
+                            .setConsistencyLevel(ConsistencyLevel.LOCAL_QUORUM)
             );
             throw new Exception(String.format("More than 1 contender for lock %s %d", choosingKey, count));
         }
@@ -255,6 +258,7 @@ public class InstanceDataDAOCassandra {
                         .value(CN_INSTANCEID, literal(instance.getInstanceId()))
                         .usingTtl(600)
                         .build()
+                        .setConsistencyLevel(ConsistencyLevel.LOCAL_QUORUM)
         );
         Thread.sleep(100);
         final List<Row> postCheck = fetchRows(CF_NAME_LOCKS, CN_KEY, lockKey);
@@ -273,6 +277,7 @@ public class InstanceDataDAOCassandra {
                         .whereColumn(CN_KEY).isEqualTo(literal(choosingKey))
                         .whereColumn(CN_INSTANCEID).isEqualTo(literal(instance.getInstanceId()))
                         .build()
+                        .setConsistencyLevel(ConsistencyLevel.LOCAL_QUORUM)
         );
     }
 
@@ -289,6 +294,7 @@ public class InstanceDataDAOCassandra {
                 deleteFrom(CF_NAME_TOKENS)
                         .whereColumn(CN_KEY).isEqualTo(literal(key))
                         .build()
+                        .setConsistencyLevel(ConsistencyLevel.LOCAL_QUORUM)
         );
 
         final String lockKey = getLockingKey(instance);
@@ -297,6 +303,7 @@ public class InstanceDataDAOCassandra {
                         .whereColumn(CN_KEY).isEqualTo(literal(lockKey))
                         .whereColumn(CN_INSTANCEID).isEqualTo(literal(instance.getInstanceId()))
                         .build()
+                        .setConsistencyLevel(ConsistencyLevel.LOCAL_QUORUM)
         );
 
         final String choosingKey = getChoosingKey(instance);
@@ -305,6 +312,7 @@ public class InstanceDataDAOCassandra {
                         .whereColumn(CN_KEY).isEqualTo(literal(choosingKey))
                         .whereColumn(CN_INSTANCEID).isEqualTo(literal(instance.getInstanceId()))
                         .build()
+                        .setConsistencyLevel(ConsistencyLevel.LOCAL_QUORUM)
         );
     }
 
