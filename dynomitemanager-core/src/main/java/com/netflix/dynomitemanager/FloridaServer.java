@@ -83,8 +83,11 @@ public class FloridaServer {
         try {
             initialize();
         } catch (Exception e) {
+            logger.error("Exception in initialize(): " + e.getMessage());
             throw new RuntimeException(e.getMessage(), e);
         }
+
+        logger.info("initialized.");
 
         // TODO: Consider adding FastPropertyManager class.
         // Set Fast Property callbacks for dynamic updates.
