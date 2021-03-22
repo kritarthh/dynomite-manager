@@ -165,14 +165,14 @@ public class FloridaServer {
             if (warmUp) {
                 logger.info("Warm bootstraping node. Scheduling BootstrapTask now!");
                 int tries = 0;
-                Bootstrap bootstrap = Bootstrap.NOT_STARTED;
+                Bootstrap boostrap = Bootstrap.NOT_STARTED;
                 while(tries < 4 && !(boostrap == Bootstrap.IN_SYNC_SUCCESS || boostrap == Bootstrap.EXPIRED_BOOTSTRAPTIME_FAIL
                     || boostrap == Bootstrap.RETRIES_FAIL)) {
                     sleeper.sleepQuietly(10000 * tries); // 2s
                     dynProcess.stop();
                     scheduler.runTaskNow(WarmBootstrapTask.class);
                     tries += 1;
-                    bootstrap = state.isBootstrapStatus();
+                    boostrap = state.isBootstrapStatus();
                 };
                 // if bootstrap fails, we are supposed to fail initialization
             } else {
