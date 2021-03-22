@@ -4,15 +4,11 @@ apply plugin: 'jacoco'
 
 
 // Gretty allows us to run tomcat from the command line using the "tomcatRun" task.
-if (!gradle.startParameter.taskRequests.isEmpty()) {
-    Properties development_properties = new Properties()
-    development_properties.load(new FileInputStream(file("src/main/resources/laptop.properties")))
     gretty {
         jacocoEnabled = false
-        httpPort = development_properties.getProperty("netflix.appinfo.port", "8080").toInteger()
+        httpPort = 8080
         contextPath = '/'
-        servletContainer = 'tomcat8'
-        systemProperties = development_properties
+        servletContainer = 'tomcat7'
         scanDirs = ['**/src/main/resources/**']
         scanDependencies = true
         // More properties can be found here:
@@ -25,7 +21,6 @@ if (!gradle.startParameter.taskRequests.isEmpty()) {
     configurations.grettyRunnerTomcat8 {
         exclude group: 'org.slf4j', module: 'log4j-over-slf4j'
     }
-}
 
 dependencies {
     compile project(':dynomitemanager-common')
