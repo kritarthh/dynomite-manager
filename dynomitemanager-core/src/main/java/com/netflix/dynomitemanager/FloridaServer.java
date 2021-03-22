@@ -164,8 +164,14 @@ public class FloridaServer {
 
             if (warmUp) {
                 logger.info("Warm bootstraping node. Scheduling BootstrapTask now!");
-                dynProcess.stop();
-                scheduler.runTaskNow(WarmBootstrapTask.class);
+                int tries = 0;
+                while(tries<4) {
+                    sleeper.sleepQuietly(10000 * tries); // 2s
+                    dynProcess.stop();
+                    scheduler.runTaskNow(WarmBootstrapTask.class);
+                    tries += 1;
+                };
+                // if bootstrap fails, we are supposed to fail initialization
             } else {
                 logger.info("Cold bootstraping, launching storage process.");
                 storageProcess.start();
