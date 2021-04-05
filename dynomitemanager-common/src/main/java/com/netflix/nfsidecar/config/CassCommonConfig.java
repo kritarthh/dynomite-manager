@@ -49,7 +49,7 @@ public interface CassCommonConfig {
     @PropertyName(name = "dyno.sidecore.port")
     public int getCassandraPort();
 
-    @DefaultValue("cassandra.us-west-1.amazonaws.com")
+    @DefaultValue("cassandra.us-east-1.amazonaws.com")
     @PropertyName(name = "dyno.sidecore.seeds")
     public String getCassandraSeeds();
 

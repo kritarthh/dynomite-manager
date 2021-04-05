@@ -107,8 +107,8 @@ public final class FloridaModule extends AbstractModule {
         /* AWS binding */
         //bind(InstanceDataRetriever.class).to(VpcInstanceDataRetriever.class);
         // bind(IMembership.class).to(AWSMembership.class);
-        bind(IMembership.class).to(EcsMembership.class);
-        // bind(IMembership.class).to(LocalMembership.class);
+        // bind(IMembership.class).to(EcsMembership.class);
+        bind(IMembership.class).to(LocalMembership.class);
         bind(ICredential.class).to(IAMCredential.class);
         bind(ICredential.class).annotatedWith(Names.named("awsroleassumption")).to(AwsRoleAssumptionCredential.class);
         // bind(InstanceEnvIdentity.class).to(AwsInstanceEnvIdentity.class);
