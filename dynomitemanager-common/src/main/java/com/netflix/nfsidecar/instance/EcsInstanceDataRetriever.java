@@ -8,7 +8,7 @@ import com.netflix.nfsidecar.utils.SystemUtils;
  */
 public class EcsInstanceDataRetriever implements InstanceDataRetriever {
     public String getRac() {
-        return SystemUtils.getDataFromUrl("http://169.254.169.254/latest/meta-data/placement/availability-zone");
+        return System.getenv("AZ");
     }
 
     public String getPublicHostname() {
@@ -25,7 +25,8 @@ public class EcsInstanceDataRetriever implements InstanceDataRetriever {
     }
 
     public String getInstanceType() {
-        return SystemUtils.getDataFromUrl("http://169.254.169.254/latest/meta-data/instance-type");
+        // return SystemUtils.getDataFromUrl("http://169.254.169.254/latest/meta-data/instance-type");
+        return "t2.micro";
     }
 
     @Override
@@ -33,7 +34,8 @@ public class EcsInstanceDataRetriever implements InstanceDataRetriever {
      * @return id of the network interface for running instance
      */
     public String getMac() {
-        return SystemUtils.getDataFromUrl("http://169.254.169.254/latest/meta-data/network/interfaces/macs/").trim();
+        // return SystemUtils.getDataFromUrl("http://169.254.169.254/latest/meta-data/network/interfaces/macs/").trim();
+        return "11:11:11:11:11";
     }
 
     @Override

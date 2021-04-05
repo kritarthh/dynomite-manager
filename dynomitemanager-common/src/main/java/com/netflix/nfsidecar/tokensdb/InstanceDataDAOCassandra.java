@@ -268,7 +268,7 @@ public class InstanceDataDAOCassandra {
         }
 
         final String lockKey = getLockingKey(instance);
-        removeExpiredLocks(lockKey, 150);
+        removeExpiredLocks(lockKey, 120);
 
         final List<Row> preCheck = fetchRows(CF_NAME_LOCKS, CN_KEY, lockKey);
         if (preCheck.size() > 0 && preCheck.stream().noneMatch(row -> instance.getInstanceId().equals(row.getString(CN_INSTANCEID)))) {
